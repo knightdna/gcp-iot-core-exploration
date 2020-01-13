@@ -34,22 +34,18 @@ const connectionArgs = {
 };
 
 async function testConnect() {
-  try {
-    const client = await mqtt.connectAsync(connectionArgs);
-    console.log('Connected');
+  const client = await mqtt.connectAsync(connectionArgs);
+  console.log('Connected');
 
-    await client.publish(`/devices/${deviceId}/commands`, JSON.stringify({ message: 'Just a telemetry event' }));
-    console.log('Published');
+  await client.publish(`/devices/${deviceId}/commands`, JSON.stringify({message: 'Just a telemetry event'}));
+  console.log('Published');
 
-    await client.end();
-    console.log('Disconnected');
-  } catch (error) {
-    console.error(error);
-  }
+  await client.end();
+  console.log('Disconnected');
 }
 
 exports.main = () => {
   testConnect()
     .then(() => console.log('Done'))
-    .catch(error => console.log('An unknown error has happened'));
+    .catch(error => console.error('An unknown error has happened'));
 };
